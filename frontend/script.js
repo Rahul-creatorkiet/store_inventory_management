@@ -1,63 +1,62 @@
-const API = "http://localhost:8000/api/flights";
+const API = "http://localhost:8000/api/products";
 
-const form = document.getElementById("flightForm");
-const table = document.getElementById("flightTable");
+async function addProduct(){
 
-// Add Flight
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+const data = {
 
-  const data = {
-    flightNumber: flightNumber.value,
-    airline: airline.value,
-    source: source.value,
-    destination: destination.value,
-    departureTime: departureTime.value,
-    arrivalTime: arrivalTime.value,
-    price: price.value
-  };
+productName: document.getElementById("productName").value,
+productCode: document.getElementById("productCode").value,
+category: document.getElementById("category").value,
+supplierName: document.getElementById("supplierName").value,
+quantityInStock: document.getElementById("quantityInStock").value,
+reorderLevel: 5,
+unitPrice: document.getElementById("unitPrice").value,
+productType: "Non-Perishable"
 
-  await fetch(API, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  });
+};
 
-  alert("Flight Added ✈️");
-  form.reset();
-  loadFlights();
+await fetch(API,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(data)
 });
 
-// Load Flights
-async function loadFlights() {
-  const res = await fetch(API);
-  const flights = await res.json();
+alert("Product Added");
 
-  table.innerHTML = "";
+loadProducts();
 
-  flights.forEach(f => {
-    const row = `
-      <tr>
-        <td>${f.flightNumber}</td>
-        <td>${f.airline}</td>
-        <td>${f.source} ➜ ${f.destination}</td>
-        <td>${new Date(f.departureTime).toLocaleString()}</td>
-        <td>₹${f.price}</td>
-        <td>${f.status}</td>
-        <td>
-          <button onclick="deleteFlight('${f._id}')">❌</button>
-        </td>
-      </tr>
-    `;
-    table.innerHTML += row;
-  });
 }
 
-// Delete Flight
-async function deleteFlight(id) {
-  await fetch(`${API}/${id}`, { method: "DELETE" });
-  loadFlights();
+async function loadProducts(){
+
+const res = await fetch(API);
+const products = await res.json();
+
+const list = document.getElementById("productList");
+
+list.innerHTML="";
+
+products.forEach(p=>{
+
+list.innerHTML += `
+<li>
+<b>${p.productName}</b> - ₹${p.unitPrice}
+<button onclick="deleteProduct('${p._id}')">Delete</button>
+</li>
+`;
+
+});
+
 }
 
-// Auto load
-loadFlights();
+async function deleteProduct(id){
+
+await fetch(API+"/"+id,{
+method:"DELETE"
+});
+
+loadProducts();
+
+}
