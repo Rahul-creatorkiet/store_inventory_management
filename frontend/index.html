@@ -1,50 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Airport Management System</title>
+  <title>Store Inventory Management</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <h1>✈️ Airport Management System</h1>
+<h1>📦 Store Inventory Management</h1>
 
-  <div class="container">
+<div class="form">
 
-    <div class="form-section">
-      <h2>Add Flight</h2>
-      <form id="flightForm">
-        <input type="text" id="flightNumber" placeholder="Flight Number" required>
-        <input type="text" id="airline" placeholder="Airline" required>
-        <input type="text" id="source" placeholder="Source" required>
-        <input type="text" id="destination" placeholder="Destination" required>
-        <input type="datetime-local" id="departureTime" required>
-        <input type="datetime-local" id="arrivalTime" required>
-        <input type="number" id="price" placeholder="Price" required>
-        <button type="submit">Add Flight</button>
-      </form>
-    </div>
+<input id="productName" placeholder="Product Name">
+<input id="productCode" placeholder="Product Code">
+<input id="category" placeholder="Category">
+<input id="supplierName" placeholder="Supplier">
+<input id="quantityInStock" placeholder="Quantity">
+<input id="unitPrice" placeholder="Price">
 
-    <div class="table-section">
-      <h2>All Flights</h2>
-      <button onclick="loadFlights()">🔄 Refresh</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Flight</th>
-            <th>Airline</th>
-            <th>Route</th>
-            <th>Time</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="flightTable"></tbody>
-      </table>
-    </div>
+<button onclick="addProduct()">➕ Add Product</button>
 
-  </div>
+</div>
 
-  <script src="script.js"></script>
+<hr>
+
+<button onclick="loadProducts()">Load Products</button>
+
+<ul id="productList"></ul>
+
+<script src="script.js"></script>
+
 </body>
 </html>
